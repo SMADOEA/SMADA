@@ -103,6 +103,26 @@
                             </div>
                         </div>
 
+                        <!-- 3. Kotak Pengurus Inti -->
+                        <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
+                            <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3">Pengurus Inti</h3>
+                            <div class="space-y-4">
+                                <template x-for="bidangObj in data.kepengurusan?.['Pengurus Inti']">
+                                    <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
+                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'• ' + bidangObj.bidang"></h4>
+                                        <ul class="space-y-1 pl-3">
+                                            <template x-for="(m, index) in bidangObj.anggota">
+                                                <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
+                                                    <span x-text="(index + 1) + '. ' + m.role"></span>
+                                                    <span x-text="m.name" class="font-mono text-xs"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
