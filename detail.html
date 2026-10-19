@@ -89,7 +89,7 @@
                             <div class="space-y-4">
                                 <template x-for="bidangObj in data.kepengurusan?.['Seksi Bidang']">
                                     <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
-                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'> ' + bidangObj.bidang"></h4>
+                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'• ' + bidangObj.bidang"></h4>
                                         <ul class="space-y-1 pl-3">
                                             <template x-for="(m, index) in bidangObj.anggota">
                                                 <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
@@ -278,6 +278,36 @@ Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan E
                                             { role: 'OPPK PRAMUKA', name: '(024)' },
                                             { role: 'OPPK COSCODA', name: '(025)' },
                                             { role: 'OPPK PASPARA', name: '(026)' }
+                                        ] 
+                                    },
+                                    {
+                                        bidang: 'KK (Keterampilan dan Kewirausahaan)', 
+                                        anggota: [
+                                            { role: 'KK 1', name: '(027)' },
+                                            { role: 'KK 2', name: '(028)' },
+                                            { role: 'KK 3', name: '(029)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'PAKS (Persepsi Apresiasi dan Kreasi Seni)', 
+                                        anggota: [
+                                            { role: 'PAKS UMUM 1', name: '(030)' },
+                                            { role: 'PAKS UMUM 2', name: '(031)' },
+                                            { role: 'PAKS MUSIK', name: '(032)' },
+                                            { role: 'PAKS EXCELSIORS', name: '(033)' },
+                                            { role: 'PAKS REDAKSI', name: '(034)' },
+                                            { role: 'PAKS DRAMA', name: '(035)' },
+                                            { role: 'PAKS FOS', name: '(036)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'KJDK (Kesehatan Jasmani dan Daya Kreasi)', 
+                                        anggota: [
+                                            { role: 'KJDK PMR', name: '(037)' },
+                                            { role: 'KJDK MP', name: '(038)' },
+                                            { role: 'KJDK BASKET', name: '(039)' },
+                                            { role: 'KJDK BOLA', name: '(040)' },
+                                            { role: 'KJDK PIK-R', name: '(041)' }
                                         ] 
                                     }
                                 ]
