@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Organisasi & Ekstrakurikuler - SMAN 2 Purwokerto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        smadaBlue: '#0284C7',
+                        smadaLightBlue: '#38BDF8',
+                        smadaBg: '#F8FAFC',
+                        smadaCard: '#FFFFFF',
+                        smadaBorder: '#E2E8F0',
+                        smadaText: '#0F172A',
+                        smadaMuted: '#64748B'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-smadaBg text-smadaText font-sans antialiased selection:bg-smadaBlue selection:text-white" 
+      x-data="{ scrolled: false }" 
+      @scroll.window="scrolled = (window.pageYOffset > 20)">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-smadaBorder transition-all duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-smadaBlue flex items-center justify-center font-bold text-xl text-white shadow-md shadow-smadaBlue/20">
+                    S
+                </div>
+                <div>
+                    <span class="block font-bold text-lg tracking-wide text-smadaText">SMADA PORTAL</span>
+                    <span class="block text-xs text-smadaMuted">SMA Negeri 2 Purwokerto</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-smadaMuted">
+                <a href="index.html#beranda" class="hover:text-smadaBlue transition">Beranda</a>
+                <a href="index.html#direktori" class="hover:text-smadaBlue transition">Direktori</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative overflow-hidden transition-all duration-300 ease-out border-b border-smadaBorder flex items-center justify-center bg-white"
+             :class="scrolled ? 'py-8 sm:py-12 opacity-95 scale-[0.98] rounded-b-3xl mx-3 sm:mx-6 border border-smadaBlue/20 bg-gradient-to-b from-white to-sky-50 shadow-xl' : 'py-20 sm:py-28'">
+        
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100/60 via-transparent to-transparent -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center transition-all duration-300"
+             :class="scrolled ? 'transform scale-95' : 'transform scale-100'">
+            
+            <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-sky-100 text-smadaBlue border border-sky-200 mb-3 uppercase tracking-widest transition-all duration-300 shadow-sm">
+                Pusat Informasi Resmi
+            </span>
+            
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-smadaText tracking-tight mb-3 transition-all duration-300"
+                :class="scrolled ? 'text-2xl sm:text-4xl' : ''">
+                Direktori Organisasi & <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-smadaBlue to-smadaLightBlue">Ekstrakurikuler SMADA</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-sm sm:text-base text-smadaMuted mb-6 transition-all duration-300"
+               x-show="!scrolled" x-transition>
+                Portal informasi komprehensif mengenai wadah pengembangan bakat, kepemimpinan, riset, seni, dan kreativitas di lingkungan SMAN 2 Purwokerto bagi seluruh warga sekolah maupun publik eksternal.
+            </p>
+            
+            <div class="flex justify-center">
+                <a href="#direktori" class="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold bg-smadaBlue text-white hover:bg-sky-700 transition shadow-lg shadow-smadaBlue/25 text-sm sm:text-base">
+                    Jelajahi Direktori
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direktori Section -->
+    <section id="direktori" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" 
+        x-data="{
+            tab: 'all',
+            keyword: '',
+            list: [
+                {slug: 'osis', name: 'OSIS SMAN 2 Purwokerto (Fatyakarsa)', cat: 'organisasi', badge: 'Organisasi Utama', desc: 'Organisasi siswa intra sekolah utama yang menaungi koordinasi kesiswaan, penertiban, kebersihan lingkungan, serta event besar seperti Smada Expo dan Classmeeting.'},
+                {slug: 'mpk', name: 'MPK (Musyawarah Perwakilan Kelas)', cat: 'organisasi', badge: 'Organisasi Pengawas', desc: 'Organisasi independen yang mengawasi jalannya kinerja OSIS, menindaklanjuti aspirasi warga sekolah, serta memegang fungsi evaluasi dan anggaran.'},
+                {slug: 'pmr', name: 'PMR Wira SMAN 2 Purwokerto (Tengu Army)', cat: 'organisasi', badge: 'Organisasi Kemanusiaan', desc: 'Organisasi di bidang kesehatan dan sosial kemanusiaan, bertindak sebagai tim medis siaga dalam penanganan kecelakaan dan kegiatan sekolah.'},
+                {slug: 'pramuka', name: 'Pramuka (Ambalan Garuda-Shima)', cat: 'organisasi', badge: 'Organisasi Wajib', desc: 'Gugus depan kepramukaan tertua di eks-Keresidenan Banyumas yang berfokus pada pendidikan kedisiplinan dan kepemimpinan.'},
+                {slug: 'paspara', name: 'PASPARA (Pasukan Pengibar Bendera)', cat: 'organisasi', badge: 'Organisasi Kedisiplinan', desc: 'Organisasi paskibra yang mengemban tugas pengibaran bendera, pembinaan kedisiplinan, baris-berbaris, dan tata upacara.'},
+                {slug: 'adiwiyata', name: 'Adiwiyata (Perivallon)', cat: 'organisasi', badge: 'Lingkungan Hidup', desc: 'Organisasi pengembangan lingkungan hidup yang mewujudkan kelestarian dan kepedulian ekologis warga sekolah.'},
+                {slug: 'coscoda', name: 'COSCODA', cat: 'organisasi', badge: 'Olimpiade & Akademik', desc: 'Community of Social Science Olympiad of Smada yang bergerak di bidang olimpiade sains dan sosial serta pengembangan potensi akademik.'},
+                {slug: 'pikr', name: 'PIK-R Sejahtera', cat: 'organisasi', badge: 'Kesehatan & Konseling', desc: 'Pusat Informasi dan Konseling Remaja yang mewadahi program penyiapan kehidupan berkeluarga bagi remaja.'},
+                {slug: 'rohis', name: 'ROHIS (Rohani Islam Exist)', cat: 'organisasi', badge: 'Keagamaan', desc: 'Organisasi keagamaan yang memperdalam pemahaman Islam melalui kegiatan kreatif, pengajian, dan literasi keagamaan.'},
+                {slug: 'katris', name: 'KATRIS (Rohani Katolik-Kristen)', cat: 'organisasi', badge: 'Keagamaan', desc: 'Organisasi kerohanian yang menjadi wadah pembinaan iman, perayaan hari besar, retret, serta pendalaman alkitab.'},
+                {slug: 'muma', name: 'MUMA (Multimedia of Smada)', cat: 'ekskul', badge: 'Seni & Teknologi', desc: 'Ekstrakurikuler di bidang desain grafis, perancangan poster, dan pengeditan foto menggunakan perangkat lunak profesional.'},
+                {slug: 'jump', name: 'JUMP (Journalist Union of Smada)', cat: 'ekskul', badge: 'Literasi & Media', desc: 'Wadah pengembangan bakat di bidang jurnalistik, peliputan berita, pengelolaan mading bulanan, dan penulisan cerita.'},
+                {slug: 'esbanda', name: 'ESBANDA (Ekstrakurikuler Band)', cat: 'ekskul', badge: 'Seni Musik', desc: 'Wadah penyaluran bakat di bidang musik modern yang rutin mengisi pementasan live music internal maupun eksternal sekolah.'},
+                {slug: 'esvo', name: 'ESVO (Smada\'s Voice)', cat: 'ekskul', badge: 'Seni Suara', desc: 'Ekstrakurikuler paduan suara resmi sekolah yang mendalami teknik vokal, pengiringan upacara, dan pementasan seremonial.'},
+                {slug: 'nuswantara', name: 'Nuswantara Doea', cat: 'ekskul', badge: 'Seni Budaya', desc: 'Ekstrakurikuler seni tari tradisional, khususnya tari Banyumasan, yang mempelajari olah tubuh, tata rias, dan kostum.'},
+                {slug: 'sekarnada', name: 'Sekarnada', cat: 'ekskul', badge: 'Seni Tradisional', desc: 'Ekstrakurikuler seni karawitan yang mendalami berbagai instrumen gamelan jawa dan pengiringan pagelaran tradisional.'},
+                {slug: 'teater', name: 'Teater Pijar', cat: 'ekskul', badge: 'Seni Teater', desc: 'Seni pementasan drama, penulisan naskah, teknik peran, tata busana, panggung, hingga pembacaan puisi dan monolog.'},
+                {slug: 'fos', name: 'FOS (Focus of Smada)', cat: 'ekskul', badge: 'Media & Kreatif', desc: 'Ekstrakurikuler fotografi dan videografi yang mempelajari teknik pengambilan gambar, komposisi, dan penyutradaraan.'},
+                {slug: 'bola', name: 'BOLA SMADA', cat: 'ekskul', badge: 'Olahraga', desc: 'Wadah pengembangan minat dan bakat dalam cabang olahraga sepak bola serta penyelenggaraan turnamen antar-pelajar.'},
+                {slug: 'mp', name: 'Merpati Putih (MP)', cat: 'ekskul', badge: 'Bela Diri', desc: 'Ekstrakurikuler pencak silat yang melatih teknik bela diri, fisik, pernapasan, serta pembinaan prestasi kejuaraan.'},
+                {slug: 'thunder', name: 'THUNDER', cat: 'ekskul', badge: 'Olahraga', desc: 'Ekstrakurikuler bola basket yang aktif melaksanakan latihan tanding, pengembangan strategi, dan kepanitiaan pertandingan.'},
+                {slug: 'volda', name: 'VOLDA (Voli Smada)', cat: 'ekskul', badge: 'Olahraga', desc: 'Ekstrakurikuler olahraga bola voli yang berfokus pada teknik permainan, kerja sama tim, dan peningkatan prestasi.'},
+                {slug: 'handball', name: 'HANDBALL (Doeahandball)', cat: 'ekskul', badge: 'Olahraga', desc: 'Olahraga bola tangan yang melatih koordinasi, taktik penyerangan/pertahanan, dan kerja sama tim tingkat nasional.'},
+                {slug: 'southeast', name: 'SOUTHEAST (Softball Smada)', cat: 'ekskul', badge: 'Olahraga', desc: 'Ekstrakurikuler softball yang melatih kekuatan fisik, akurasi lempar-tangkap, batting, fielding, dan strategi.'},
+                {slug: 'excisiors', name: 'EXCELSIORS', cat: 'ekskul', badge: 'Akademik & Bahasa', desc: 'Ekstrakurikuler kebahasaan dan sastra Inggris yang terbagi dalam departemen Debate, Entertainment, dan Journalism.'},
+                {slug: 'sos', name: 'SOS (Saman of Smada)', cat: 'ekskul', badge: 'Seni Budaya', desc: 'Ekstrakurikuler tari Saman tingkat SMA di Banyumas yang memupuk kekompakan gerak dan pementasan seni.'},
+                {slug: 'chaos', name: 'CHAOS (Creative House Art of Smada)', cat: 'ekskul', badge: 'Seni Rupa', desc: 'Ekstrakurikuler seni rupa (menggambar anatomi, pemandangan, komik, poster) serta pameran karya seni.'},
+                {slug: 'qof', name: 'QOF (Quranic Generation of Smada)', cat: 'ekskul', badge: 'Keagamaan', desc: 'Ekstrakurikuler keagamaan yang berfokus pada pendalaman dan hafalan Al-Quran serta kegiatan dakwah sosial.'},
+                {slug: 'smartkir', name: 'SMART-KIR (Smada Research Team)', cat: 'ekskul', badge: 'Akademik & Riset', desc: 'Keluarga ilmiah remaja tempat menyalurkan eksperimen ilmiah, penelitian, dan penemuan baru di bawah naungan COSCODA.'}
+            ]
+        }"
+    >
+        
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+            <button @click="tab = 'all'" :class="tab === 'all' ? 'bg-smadaBlue text-white shadow-md shadow-smadaBlue/20' : 'bg-white text-smadaMuted hover:text-smadaText border border-smadaBorder'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition duration-300">
+                Semua
+            </button>
+            <button @click="tab = 'organisasi'" :class="tab === 'organisasi' ? 'bg-smadaBlue text-white shadow-md shadow-smadaBlue/20' : 'bg-white text-smadaMuted hover:text-smadaText border border-smadaBorder'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition duration-300">
+                Organisasi
+            </button>
+            <button @click="tab = 'ekskul'" :class="tab === 'ekskul' ? 'bg-smadaBlue text-white shadow-md shadow-smadaBlue/20' : 'bg-white text-smadaMuted hover:text-smadaText border border-smadaBorder'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition duration-300">
+                Ekstrakurikuler
+            </button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="max-w-md mx-auto mb-16">
+            <input type="text" x-model="keyword" placeholder="Cari organisasi atau ekstrakurikuler..." class="w-full bg-white border border-smadaBorder rounded-xl px-4 py-3 text-sm text-smadaText placeholder-gray-400 focus:outline-none focus:border-smadaBlue focus:ring-2 focus:ring-smadaBlue/20 transition duration-300 shadow-sm">
+        </div>
+
+        <!-- Grid Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+             x-transition:enter="transition ease-out duration-500"
+             x-transition:enter-start="opacity-0 transform translate-y-4"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             :key="tab">
+             
+            <template x-for="item in list.filter(i => (tab === 'all' || i.cat === tab) && i.name.toLowerCase().includes(keyword.toLowerCase()))" :key="item.slug">
+                <div class="bg-smadaCard border border-smadaBorder rounded-2xl p-6 flex flex-col justify-between hover:border-smadaBlue/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-smadaBlue border border-sky-100" x-text="item.badge"></span>
+                            <span class="text-xs uppercase tracking-wider text-smadaMuted font-bold" x-text="item.cat"></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-smadaText mb-3" x-text="item.name"></h3>
+                        <p class="text-smadaMuted text-sm leading-relaxed mb-6" x-text="item.desc"></p>
+                    </div>
+
+                    <a :href="'detail.html?slug=' + item.slug" class="w-full py-2.5 rounded-xl bg-sky-50 text-sm font-semibold text-smadaBlue hover:bg-smadaBlue hover:text-white transition-all duration-300 flex items-center justify-center space-x-2">
+                        <span>Lihat Profil & Progja</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-smadaBorder py-12 text-center text-sm text-smadaMuted bg-white">
+        <p>© 2026 SMAN 2 Purwokerto. Portal Resmi Organisasi & Ekstrakurikuler.</p>
+    </footer>
+
+</body>
+</html>
