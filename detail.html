@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Organisasi - SMAN 2 Purwokerto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        smadaBlue: '#0284C7',
+                        smadaLightBlue: '#38BDF8',
+                        smadaBg: '#F8FAFC',
+                        smadaCard: '#FFFFFF',
+                        smadaBorder: '#E2E8F0',
+                        smadaText: '#0F172A',
+                        smadaMuted: '#64748B'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-smadaBg text-smadaText font-sans antialiased selection:bg-smadaBlue selection:text-white" x-data="orgDetail()">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-smadaBorder shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-2 text-smadaBlue font-semibold hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span>Kembali ke Beranda</span>
+            </a>
+            <span class="text-xs font-bold uppercase tracking-wider text-smadaMuted" x-text="data.badge"></span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Header Profil -->
+        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-12 shadow-sm text-center mb-10">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-smadaBlue font-extrabold text-3xl shadow-inner">
+                <span x-text="data.name ? data.name.charAt(0) : 'S'"></span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-smadaText mb-4" x-text="data.name"></h1>
+            <p class="text-smadaMuted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto" x-text="data.desc"></p>
+        </div>
+
+        <!-- Bagian Kepengurusan -->
+        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-10 shadow-sm mb-8" x-show="data.kepengurusan">
+            <h2 class="text-xl font-bold text-smadaText mb-6 flex items-center">
+                <span class="w-2 h-6 bg-smadaBlue rounded-full mr-3"></span>
+                KEPENGURUSAN
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <template x-for="(group, title) in data.kepengurusan">
+                    <div class="bg-slate-50 border border-smadaBorder rounded-2xl p-5">
+                        <h3 class="font-bold text-smadaBlue text-sm uppercase tracking-wide mb-3" x-text="title"></h3>
+                        <ul class="space-y-2">
+                            <template x-for="item in group">
+                                <li class="text-sm text-smadaText flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
+                                    <span x-text="item.role" class="font-medium"></span>
+                                    <span x-text="item.name" class="text-smadaMuted font-mono text-xs"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Bagian Program Kerja -->
+        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-10 shadow-sm mb-8" x-show="data.progjaDetails">
+            <h2 class="text-xl font-bold text-smadaText mb-6 flex items-center">
+                <span class="w-2 h-6 bg-smadaBlue rounded-full mr-3"></span>
+                PROGRAM KERJA UTAMA
+            </h2>
+            <div class="space-y-6">
+                <template x-for="(prog, index) in data.progjaDetails">
+                    <div class="border-b border-smadaBorder pb-6 last:border-0 last:pb-0">
+                        <h3 class="text-lg font-bold text-smadaText mb-2" x-text="(index + 1) + '. ' + prog.title"></h3>
+                        <p class="text-smadaMuted text-sm leading-relaxed" x-text="prog.desc"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Bagian Lain-lain (Catatan / Informasi Khusus) -->
+        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-10 shadow-sm mb-8" x-show="data.lainLain">
+            <h2 class="text-xl font-bold text-smadaText mb-6 flex items-center">
+                <span class="w-2 h-6 bg-smadaBlue rounded-full mr-3"></span>
+                LAIN-LAIN
+            </h2>
+            <ul class="space-y-3">
+                <template x-for="note in data.lainLain">
+                    <li class="flex items-start text-sm text-smadaMuted">
+                        <span class="text-smadaBlue mr-3 font-bold">•</span>
+                        <span x-text="note"></span>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <!-- Bagian Sosial Media -->
+        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-10 shadow-sm text-center">
+            <h2 class="text-xl font-bold text-smadaText mb-6">SOSIAL MEDIA</h2>
+            <div class="flex justify-center gap-4">
+                <a href="#" class="px-6 py-3 rounded-xl bg-sky-50 text-smadaBlue font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition">Instagram</a>
+                <a href="#" class="px-6 py-3 rounded-xl bg-sky-50 text-smadaBlue font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition">TikTok</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-smadaBorder py-12 text-center text-sm text-smadaMuted bg-white mt-20">
+        <p>© 2026 SMAN 2 Purwokerto. Portal Resmi Organisasi & Ekstrakurikuler.</p>
+    </footer>
+
+    <!-- Script Pengisi Data Dinamis Berdasarkan Slug URL -->
+    <script>
+        function orgDetail() {
+            return {
+                data: {},
+                init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const slug = urlParams.get('slug') || 'osis';
+                    
+                    // Database Profil Detail Organisasi
+                    const database = {
+                        'osis': {
+                            name: 'OSIS SMAN 2 Purwokerto (Fatyakarsa)',
+                            badge: 'Organisasi Utama',
+                            desc: 'Organisasi Siswa Intra Sekolah (OSIS) SMAN 2 Purwokerto merupakan organisasi utama yang menaungi seluruh kegiatan kesiswaan, penertiban, kebersihan lingkungan, serta event besar sekolah.',
+                            kepengurusan: {
+                                'BPH (Badan Pengurus Harian)': [
+                                    { role: 'Ketua Umum', name: '(001)' },
+                                    { role: 'Sekretaris Umum', name: '(004)' },
+                                    { role: 'Bendahara Umum', name: '(007)' }
+                                ],
+                                'Seksi Bidang Utama': [
+                                    { role: 'KTTYME (Keagamaan)', name: 'Koordinator' },
+                                    { role: 'PPBN (Bela Negara)', name: 'Koordinator' },
+                                    { role: 'KBPL (Budi Pekerti)', name: 'Koordinator' },
+                                    { role: 'OPPK (Politik & Kepemimpinan)', name: 'Koordinator' }
+                                ]
+                            },
+                            progjaDetails: [
+                                { title: 'Smada Expo', desc: 'Acara besar tahunan untuk memperingati hari ulang tahun SMAN 2 Purwokerto yang diisi dengan perlombaan internal maupun eksternal seperti pentas seni dan pameran.' },
+                                { title: 'Bakti Sosial', desc: 'Program kemanusiaan dan kepedulian sosial ke desa mitra atau panti asuhan melalui penyuluhan, pemeriksaan kesehatan, dan bantuan sosial.' },
+                                { title: 'Classmeeting', desc: 'Rangkaian perlombaan antar-kelas yang dilaksanakan rutin untuk menyalurkan bakat olahraga, e-sports, dan kreativitas siswa.' },
+                                { title: 'Peringatan HUT RI', desc: 'Perayaan kemerdekaan Republik Indonesia yang diisi upacara, formasi selebrasi, tasyakuran, dan berbagai lomba positif.' }
+                            ],
+                            lainLain: [
+                                'OSIS SMAN 2 Purwokerto terdiri dari Pengurus Inti, Pengurus Umum, dan Pengurus Perwakilan Ekstrakurikuler.',
+                                'Nama periode kepengurusan dinamai berurutan berdasarkan abjad (misal: Fatyakarsa).',
+                                'Memiliki sistem NPO (Nomor Pengurus OSIS) resmi untuk penataan administrasi.'
+                            ]
+                        },
+                        // Contoh default untuk ekstrakurikuler lain jika belum diatur spesifik
+                        'default': {
+                            name: 'Profil Organisasi & Ekstrakurikuler SMADA',
+                            badge: 'Informasi Resmi',
+                            desc: 'Wadah resmi pengembangan bakat, minat, kedisiplinan, dan prestasi siswa di lingkungan SMAN 2 Purwokerto.',
+                            kepengurusan: {
+                                'Pengurus Inti': [
+                                    { role: 'Ketua', name: 'Pengurus Aktif' },
+                                    { role: 'Sekretaris', name: 'Pengurus Aktif' }
+                                ]
+                            },
+                            progjaDetails: [
+                                { title: 'Latihan & Kegiatan Rutin', desc: 'Kegiatan pembinaan rutin yang terjadwal untuk mengasah keterampilan anggota.' },
+                                { title: 'Partisipasi Event & Lomba', desc: 'Keikutsertaan aktif dalam berbagai kompetisi tingkat regional maupun nasional.' }
+                            ],
+                            lainLain: [
+                                'Terbuka bagi seluruh siswa SMAN 2 Purwokerto yang memiliki minat dan komitmen.',
+                                'Aktif berkontribusi dalam berbagai event besar sekolah.'
+                            ]
+                        }
+                    };
+
+                    // Ambil data berdasarkan slug, jika tidak ada pakai default
+                    this.data = database[slug] || database['default'];
+                    if(slug !== 'osis' && database[slug]) {
+                        // Sesuaikan nama jika dipilih dari list umum
+                        // (bisa dikustomisasi lebih lanjut untuk setiap ekskul)
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
