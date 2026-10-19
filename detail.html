@@ -68,11 +68,13 @@
                 <div x-show="openSection === 'kepengurusan'" 
                      x-collapse.duration.600ms
                      class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                    <div class="space-y-6 mt-3">
                         <template x-for="(group, title) in data.kepengurusan">
                             <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
-                                <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-2" x-text="title"></h3>
-                                <ul class="space-y-1.5">
+                                <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3" x-text="title"></h3>
+                                
+                                <!-- Jika BPH (berbentuk array biasa) -->
+                                <ul class="space-y-1.5" x-show="Array.isArray(group)">
                                     <template x-for="item in group">
                                         <li class="text-xs sm:text-sm text-smadaText flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
                                             <span x-text="item.role" class="font-medium"></span>
@@ -80,6 +82,24 @@
                                         </li>
                                     </template>
                                 </ul>
+
+                                <!-- Jika Seksi Bidang (berbentuk array bertingkat dengan sub-anggota) -->
+                                <div class="space-y-4" x-show="!Array.isArray(group)">
+                                    <template x-for="bidangObj in group">
+                                        <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
+                                            <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'> ' + bidangObj.bidang"></h4>
+                                            <ul class="space-y-1 pl-3">
+                                                <template x-for="(m, index) in bidangObj.anggota">
+                                                    <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
+                                                        <span x-text="(index + 1) + '. ' + m.role"></span>
+                                                        <span x-text="m.name" class="font-mono text-xs"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </div>
+
                             </div>
                         </template>
                     </div>
@@ -205,15 +225,84 @@
 Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan Ekstrakurikuler yang berfungsi sebagai penghubung dengan semua Organisasi dan Ekstrakurikuler di SMADA lho. Lingkup kerja dari OSIS sendiri tidak hanya Internal SMADA, namun juga dengan masyarakat di luar sekolah. Dengan bergabung di OSIS, kamu bisa meningkatkan jiwa kepemimpinan dan sosial serta belajar banyak mengenai sistem berorganisasi. Are You Ready To Be The Next Leader?`,
                             kepengurusan: {
                                 'BPH (Badan Pengurus Harian)': [
-                                    { role: 'Ketua Umum', name: '(001)' },
-                                    { role: 'Sekretaris Umum', name: '(004)' },
-                                    { role: 'Bendahara Umum', name: '(007)' }
+                                    { role: 'KETUA UMUM', name: '(001)' },
+                                    { role: 'KETUA 1', name: '(002)' },
+                                    { role: 'KETUA 2', name: '(003)' },
+                                    { role: 'SEKRETARIS UMUM', name: '(004)' },
+                                    { role: 'SEKRETARIS 1', name: '(005)' },
+                                    { role: 'SEKRETARIS 2', name: '(006)' },
+                                    { role: 'BENDAHARA UMUM', name: '(007)' },
+                                    { role: 'BENDAHARA 1', name: '(008)' },
+                                    { role: 'BENDAHARA 2', name: '(009)' }
                                 ],
-                                'Seksi Bidang Utama': [
-                                    { role: 'KTTYME (Keagamaan)', name: 'Koordinator' },
-                                    { role: 'PPBN (Bela Negara)', name: 'Koordinator' },
-                                    { role: 'KBPL (Budi Pekerti)', name: 'Koordinator' },
-                                    { role: 'OPPK (Politik & Kepemimpinan)', name: 'Koordinator' }
+                                'Seksi Bidang': [
+                                    { 
+                                        bidang: 'KTTYME (Ketaqwaan Terhadap Tuhan Yang Maha Esa)', 
+                                        anggota: [
+                                            { role: 'KTTYME ROHIS', name: '(010)' },
+                                            { role: 'KTTYME ROHKRIS', name: '(011)' },
+                                            { role: 'KTTYME ROHKAT', name: '(012)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'PPBN (Pendidikan Pendahuluan Bela Negara)', 
+                                        anggota: [
+                                            { role: 'PPBN 1', name: '(013)' },
+                                            { role: 'PPBN 2', name: '(014)' },
+                                            { role: 'PPBN 3', name: '(015)' },
+                                            { role: 'PPBN 4', name: '(016)' },
+                                            { role: 'PPBN 5', name: '(017)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'KBPL (Kepribadian Budi Pekerti Luhur)', 
+                                        anggota: [
+                                            { role: 'KBPL 1', name: '(018)' },
+                                            { role: 'KBPL 2', name: '(019)' },
+                                            { role: 'KBPL 3', name: '(020)' },
+                                            { role: 'KBPL 4', name: '(021)' },
+                                            { role: 'KBPL 5', name: '(022)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'OPPK (Organisasi Pendidikan Politik & Kepemimpinan)', 
+                                        anggota: [
+                                            { role: 'OPPK UMUM', name: '(023)' },
+                                            { role: 'OPPK PRAMUKA', name: '(024)' },
+                                            { role: 'OPPK COSCODA', name: '(025)' },
+                                            { role: 'OPPK PASPARA', name: '(026)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'KK (Keterampilan Kewirausahaan)', 
+                                        anggota: [
+                                            { role: 'KK 1', name: '(027)' },
+                                            { role: 'KK 2', name: '(028)' },
+                                            { role: 'KK 3', name: '(029)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'PAKS (Persepsi Apresiasi & Kreasi Seni)', 
+                                        anggota: [
+                                            { role: 'PAKS UMUM 1', name: '(030)' },
+                                            { role: 'PAKS UMUM 2', name: '(031)' },
+                                            { role: 'PAKS MUSIK', name: '(032)' },
+                                            { role: 'OPPK EXCELSIORS', name: '(033)' },
+                                            { role: 'PAKS REDAKSI', name: '(034)' },
+                                            { role: 'PAKS DRAMA', name: '(035)' },
+                                            { role: 'OPPK FOS', name: '(036)' }
+                                        ] 
+                                    },
+                                    { 
+                                        bidang: 'KJDK (Kesehatan Jasmani & Daya Kreasi)', 
+                                        anggota: [
+                                            { role: 'KJDK PMR', name: '(037)' },
+                                            { role: 'KJDK MP', name: '(038)' },
+                                            { role: 'KJDK BASKET', name: '(039)' },
+                                            { role: 'KJDK BOLA', name: '(040)' },
+                                            { role: 'KJDK PIK-R', name: '(041)' }
+                                        ] 
+                                    }
                                 ]
                             },
                             progjaDetails: [
