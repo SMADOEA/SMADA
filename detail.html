@@ -52,7 +52,7 @@
             <p class="text-smadaMuted text-sm sm:text-base leading-relaxed max-w-xl mx-auto whitespace-pre-line" x-text="data.desc"></p>
         </div>
 
-        <!-- Daftar Laci (Accordion) dengan Animasi Membuka Laci -->
+                <!-- Daftar Laci (Accordion) dengan Animasi Slide Buka-Tutup -->
         <div class="space-y-4">
             
             <!-- Laci 1: Kepengurusan -->
@@ -66,9 +66,9 @@
                     <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'kepengurusan' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'kepengurusan'" 
-                     x-collapse.duration.600ms
-                     class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <div class="space-y-6 mt-3">
+                     x-collapse 
+                     class="border-t border-smadaBorder">
+                    <div class="px-6 py-6 space-y-6">
                         
                         <!-- 1. Kotak BPH -->
                         <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
@@ -89,7 +89,7 @@
                             <div class="space-y-4">
                                 <template x-for="bidangObj in data.kepengurusan?.['Seksi Bidang']">
                                     <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
-                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'• ' + bidangObj.bidang"></h4>
+                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'> ' + bidangObj.bidang"></h4>
                                         <ul class="space-y-1 pl-3">
                                             <template x-for="(m, index) in bidangObj.anggota">
                                                 <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
@@ -118,9 +118,9 @@
                     <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'progja' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'progja'" 
-                     x-collapse.duration.600ms
-                     class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <div class="space-y-4 mt-2">
+                     x-collapse 
+                     class="border-t border-smadaBorder">
+                    <div class="px-6 py-6 space-y-4">
                         <template x-for="(prog, index) in data.progjaDetails">
                             <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
                                 <h3 class="text-sm sm:text-base font-bold text-smadaText mb-1" x-text="(index + 1) + '. ' + prog.title"></h3>
@@ -142,14 +142,16 @@
                     <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'dokumentasi' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'dokumentasi'" 
-                     x-collapse.duration.600ms
-                     class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3">
-                        <template x-for="img in data.dokumentasi">
-                            <div class="rounded-xl overflow-hidden border border-smadaBorder bg-slate-100 aspect-video shadow-sm">
-                                <img :src="img" alt="Dokumentasi Kegiatan" class="w-full h-full object-cover hover:scale-105 transition duration-300">
-                            </div>
-                        </template>
+                     x-collapse 
+                     class="border-t border-smadaBorder">
+                    <div class="px-6 py-6">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <template x-for="img in data.dokumentasi">
+                                <div class="rounded-xl overflow-hidden border border-smadaBorder bg-slate-100 aspect-video shadow-sm">
+                                    <img :src="img" alt="Dokumentasi Kegiatan" class="w-full h-full object-cover hover:scale-105 transition duration-300">
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -165,16 +167,18 @@
                     <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'lain' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'lain'" 
-                     x-collapse.duration.600ms
-                     class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <ul class="space-y-2 mt-2">
-                        <template x-for="note in data.lainLain">
-                            <li class="flex items-start text-xs sm:text-sm text-smadaMuted bg-slate-50 border border-smadaBorder rounded-xl p-3">
-                                <span class="text-smadaBlue mr-2 font-bold">•</span>
-                                <span x-text="note"></span>
-                            </li>
-                        </template>
-                    </ul>
+                     x-collapse 
+                     class="border-t border-smadaBorder">
+                    <div class="px-6 py-6">
+                        <ul class="space-y-2">
+                            <template x-for="note in data.lainLain">
+                                <li class="flex items-start text-xs sm:text-sm text-smadaMuted bg-slate-50 border border-smadaBorder rounded-xl p-3">
+                                    <span class="text-smadaBlue mr-2 font-bold">•</span>
+                                    <span x-text="note"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -189,11 +193,13 @@
                     <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'sosmed' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'sosmed'" 
-                     x-collapse.duration.600ms
-                     class="px-6 pb-6 pt-2 border-t border-smadaBorder">
-                    <div class="flex gap-3 mt-3">
-                        <a :href="data.sosmed?.ig || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">Instagram</a>
-                        <a :href="data.sosmed?.tt || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">TikTok</a>
+                     x-collapse 
+                     class="border-t border-smadaBorder">
+                    <div class="px-6 py-6">
+                        <div class="flex gap-3">
+                            <a :href="data.sosmed?.ig || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">Instagram</a>
+                            <a :href="data.sosmed?.tt || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">TikTok</a>
+                        </div>
                     </div>
                 </div>
             </div>
