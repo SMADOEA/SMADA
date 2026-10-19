@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
+<html lang="id" class="scroll-smooth" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,6 @@
                         smadaBorder: '#E2E8F0',
                         smadaText: '#0F172A',
                         smadaMuted: '#64748B',
-                        // Warna kustom khusus Mode Gelap (Hitam & Merah)
                         darkBg: '#09090B',
                         darkCard: '#18181B',
                         darkBorder: '#27272A',
@@ -35,7 +34,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-smadaBg dark:bg-darkBg text-smadaText dark:text-darkText font-sans antialiased selection:bg-smadaBlue dark:selection:bg-smadaRed selection:text-white transition-colors duration-300" 
-      x-data="{ scrolled: false }" 
+      x-data="{ scrolled: false, mobileMenu: false }" 
       @scroll.window="scrolled = (window.pageYOffset > 20)">
 
     <!-- Navbar -->
@@ -49,7 +48,8 @@
                 </div>
             </div>
             
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-3">
+                <!-- Navigasi Desktop -->
                 <nav class="hidden md:flex space-x-8 text-sm font-medium text-smadaMuted dark:text-darkMuted">
                     <a href="#beranda" class="hover:text-smadaBlue dark:hover:text-smadaRed transition">Beranda</a>
                     <a href="#direktori" class="hover:text-smadaBlue dark:hover:text-smadaRed transition">Direktori</a>
@@ -57,12 +57,24 @@
 
                 <!-- Tombol Toggle Mode Terang / Gelap -->
                 <button @click="darkMode = !darkMode" class="p-2.5 rounded-xl border border-smadaBorder dark:border-darkBorder bg-sky-50 dark:bg-zinc-800 text-smadaBlue dark:text-smadaRed hover:scale-105 transition shadow-sm" aria-label="Toggle Dark Mode">
-                    <!-- Icon Matahari (Muncul saat Dark Mode aktif) -->
                     <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <!-- Icon Bulan (Muncul saat Light Mode aktif) -->
                     <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                 </button>
+
+                <!-- Tombol Hamburger Menu (Mobile) -->
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2.5 rounded-xl border border-smadaBorder dark:border-darkBorder bg-sky-50 dark:bg-zinc-800 text-smadaBlue dark:text-smadaRed transition shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path x-show="mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
+        </div>
+
+        <!-- Dropdown Menu Mobile -->
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-white dark:bg-darkCard border-b border-smadaBorder dark:border-darkBorder px-4 py-4 space-y-3">
+            <a href="#beranda" @click="mobileMenu = false" class="block font-medium text-sm text-smadaMuted dark:text-darkMuted hover:text-smadaBlue dark:hover:text-smadaRed">Beranda</a>
+            <a href="#direktori" @click="mobileMenu = false" class="block font-medium text-sm text-smadaMuted dark:text-darkMuted hover:text-smadaBlue dark:hover:text-smadaRed">Direktori</a>
         </div>
     </header>
 
@@ -126,7 +138,7 @@
                 {slug: 'mp', name: 'Merpati Putih (MP)', cat: 'ekskul', badge: 'Bela Diri', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler pencak silat yang melatih teknik bela diri, fisik, pernapasan, serta pembinaan prestasi kejuaraan.'},
                 {slug: 'thunder', name: 'THUNDER', cat: 'ekskul', badge: 'Olahraga', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler bola basket yang aktif melaksanakan latihan tanding, pengembangan strategi, dan kepanitiaan pertandingan.'},
                 {slug: 'volda', name: 'VOLDA (Voli Smada)', cat: 'ekskul', badge: 'Olahraga', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler olahraga bola voli yang berfokus pada teknik permainan, kerja sama tim, dan peningkatan prestasi.'},
-                {slug: 'handball', name: 'HANDBALL (Doeahandball)', cat: 'ekskul', badge: 'Olahraga', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler bola tangan yang melatih koordinasi, taktik penyerangan/pertahanan, dan kerja sama tim tingkat nasional.'},
+                {slug: 'handball', name: 'HANDBALL (Doeahandball)', cat: 'ekskul', badge: 'Olahraga', logo: 'SAVE_20261019_200612.jpg', desc: 'Olahraga bola tangan yang melatih koordinasi, taktik penyerangan/pertahanan, dan kerja sama tim tingkat nasional.'},
                 {slug: 'southeast', name: 'SOUTHEAST (Softball Smada)', cat: 'ekskul', badge: 'Olahraga', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler softball yang melatih kekuatan fisik, akurasi lempar-tangkap, batting, fielding, dan strategi.'},
                 {slug: 'excisiors', name: 'EXCELSIORS', cat: 'ekskul', badge: 'Akademik & Bahasa', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler kebahasaan dan sastra Inggris yang terbagi dalam departemen Debate, Entertainment, dan Journalism.'},
                 {slug: 'sos', name: 'SOS (Saman of Smada)', cat: 'ekskul', badge: 'Seni Budaya', logo: 'SAVE_20261019_200612.jpg', desc: 'Ekstrakurikuler tari Saman tingkat SMA di Banyumas yang memupuk kekompakan gerak dan pementasan seni.'},
@@ -165,15 +177,14 @@
             <template x-for="item in list.filter(i => (tab === 'all' || i.cat === tab) && i.name.toLowerCase().includes(keyword.toLowerCase()))" :key="item.slug">
                 <div class="relative overflow-hidden bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl p-6 flex flex-col justify-between hover:border-smadaBlue/40 dark:hover:border-smadaRed/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 shadow-sm">
                     
-                    <!-- Logo Watermark di Tengah (Ukuran 1/2 Kartu & Transparan) -->
+                    <!-- Logo Watermark di Tengah (Opacity 50% Terang, 75% Gelap) -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                        <img :src="item.logo" alt="" class="w-1/2 h-1/2 object-contain opacity-10 dark:opacity-5 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]">
+                        <img :src="item.logo" alt="" class="w-1/2 h-1/2 object-contain opacity-50 dark:opacity-75 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]">
                     </div>
 
-                    <!-- Konten Utama Kartu (Berada di atas watermark) -->
+                    <!-- Konten Utama Kartu -->
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-4">
-                            <!-- Badge Kategori -->
                             <span class="px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 dark:bg-red-950/50 text-smadaBlue dark:text-smadaRed border border-sky-100 dark:border-red-900/40" x-text="item.badge"></span>
                             <span class="text-xs uppercase tracking-wider text-smadaMuted dark:text-darkMuted font-bold" x-text="item.cat"></span>
                         </div>
