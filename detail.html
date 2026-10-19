@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="scroll-smooth" x-data="{ darkMode: false }" :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -17,7 +18,14 @@
                         smadaCard: '#FFFFFF',
                         smadaBorder: '#E2E8F0',
                         smadaText: '#0F172A',
-                        smadaMuted: '#64748B'
+                        smadaMuted: '#64748B',
+                        // Warna Mode Gelap (Hitam & Merah)
+                        darkBg: '#09090B',
+                        darkCard: '#18181B',
+                        darkBorder: '#27272A',
+                        darkText: '#FAFAFA',
+                        darkMuted: '#A1A1AA',
+                        smadaRed: '#EF4444'
                     }
                 }
             }
@@ -28,16 +36,24 @@
     <!-- Alpine Collapse Plugin -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-smadaBg text-smadaText font-sans antialiased selection:bg-smadaBlue selection:text-white" x-data="orgDetail()">
+<body class="bg-smadaBg dark:bg-darkBg text-smadaText dark:text-darkText font-sans antialiased selection:bg-smadaBlue dark:selection:bg-smadaRed selection:text-white transition-colors duration-300" x-data="orgDetail()">
 
     <!-- Navbar -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-smadaBorder shadow-sm">
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-darkCard/90 backdrop-blur-md border-b border-smadaBorder dark:border-darkBorder shadow-sm transition-colors duration-300">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="index.html" class="flex items-center space-x-2 text-smadaBlue font-semibold hover:underline">
+            <a href="index.html" class="flex items-center space-x-2 text-smadaBlue dark:text-smadaRed font-semibold hover:underline">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                 <span>Kembali ke Beranda</span>
             </a>
-            <img src="SAVE_20261019_200612.jpg" alt="Logo SMADA" class="w-9 h-9 rounded-xl object-contain p-0.5 bg-white shadow-sm border border-smadaBorder">
+            
+            <div class="flex items-center space-x-3">
+                <!-- Tombol Toggle Mode Terang / Gelap -->
+                <button @click="darkMode = !darkMode" class="p-2.5 rounded-xl border border-smadaBorder dark:border-darkBorder bg-sky-50 dark:bg-zinc-800 text-smadaBlue dark:text-smadaRed hover:scale-105 transition shadow-sm" aria-label="Toggle Dark Mode">
+                    <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <img src="SAVE_20261019_200612.jpg" alt="Logo SMADA" class="w-9 h-9 rounded-xl object-contain p-0.5 bg-white dark:bg-zinc-900 shadow-sm border border-smadaBorder dark:border-darkBorder">
+            </div>
         </div>
     </header>
 
@@ -45,54 +61,54 @@
     <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12" x-data="{ openSection: 'kepengurusan' }">
         
         <!-- Header Profil -->
-        <div class="bg-smadaCard border border-smadaBorder rounded-3xl p-8 sm:p-10 shadow-sm text-center mb-8">
-            <img :src="data.logo" alt="Logo Organisasi" class="w-24 h-24 mx-auto mb-5 rounded-2xl object-contain p-2 border border-smadaBorder shadow-sm bg-white">
+        <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-3xl p-8 sm:p-10 shadow-sm text-center mb-8 transition-colors duration-300">
+            <img :src="data.logo" alt="Logo Organisasi" class="w-24 h-24 mx-auto mb-5 rounded-2xl object-contain p-2 border border-smadaBorder dark:border-darkBorder shadow-sm bg-white dark:bg-zinc-900">
             
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-smadaText mb-3" x-text="data.name"></h1>
-            <p class="text-smadaMuted text-sm sm:text-base leading-relaxed max-w-xl mx-auto whitespace-pre-line" x-text="data.desc"></p>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-smadaText dark:text-darkText mb-3" x-text="data.name"></h1>
+            <p class="text-smadaMuted dark:text-darkMuted text-sm sm:text-base leading-relaxed max-w-xl mx-auto whitespace-pre-line" x-text="data.desc"></p>
         </div>
 
-                <!-- Daftar Laci (Accordion) dengan Animasi Slide Buka-Tutup -->
+        <!-- Daftar Laci (Accordion) dengan Animasi Slide Buka-Tutup -->
         <div class="space-y-4">
             
             <!-- Laci 1: Kepengurusan -->
-            <div class="bg-smadaCard border border-smadaBorder rounded-2xl overflow-hidden shadow-sm transition-all">
+            <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl overflow-hidden shadow-sm transition-all">
                 <button @click="openSection = (openSection === 'kepengurusan' ? null : 'kepengurusan')" 
-                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText hover:bg-sky-50/50 transition">
+                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText dark:text-darkText hover:bg-sky-50/50 dark:hover:bg-zinc-800/50 transition">
                     <span class="flex items-center text-sm sm:text-base">
-                        <span class="w-2 h-5 bg-smadaBlue rounded-full mr-3"></span>
+                        <span class="w-2 h-5 bg-smadaBlue dark:bg-smadaRed rounded-full mr-3"></span>
                         KEPENGURUSAN
                     </span>
-                    <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'kepengurusan' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-5 h-5 text-smadaMuted dark:text-darkMuted transition-transform duration-300" :class="openSection === 'kepengurusan' ? 'rotate-180 text-smadaBlue dark:text-smadaRed' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'kepengurusan'" 
                      x-collapse 
-                     class="border-t border-smadaBorder">
+                     class="border-t border-smadaBorder dark:border-darkBorder">
                     <div class="px-6 py-6 space-y-6">
                         
                         <!-- 1. Kotak BPH -->
-                        <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
-                            <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3">BPH (Badan Pengurus Harian)</h3>
+                        <div class="bg-slate-50 dark:bg-zinc-900/60 border border-smadaBorder dark:border-darkBorder rounded-xl p-4">
+                            <h3 class="font-bold text-smadaBlue dark:text-smadaRed text-xs uppercase tracking-wide mb-3">BPH (Badan Pengurus Harian)</h3>
                             <ul class="space-y-1.5">
                                 <template x-for="item in data.kepengurusan?.['BPH (Badan Pengurus Harian)']">
-                                    <li class="text-xs sm:text-sm text-smadaText flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
+                                    <li class="text-xs sm:text-sm text-smadaText dark:text-darkText flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-zinc-800 last:border-0">
                                         <span x-text="item.role" class="font-medium"></span>
-                                        <span x-text="item.name" class="text-smadaMuted font-mono text-xs"></span>
+                                        <span x-text="item.name" class="text-smadaMuted dark:text-darkMuted font-mono text-xs"></span>
                                     </li>
                                 </template>
                             </ul>
                         </div>
 
                         <!-- 2. Kotak Seksi Bidang -->
-                        <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
-                            <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3">Seksi Bidang</h3>
+                        <div class="bg-slate-50 dark:bg-zinc-900/60 border border-smadaBorder dark:border-darkBorder rounded-xl p-4">
+                            <h3 class="font-bold text-smadaBlue dark:text-smadaRed text-xs uppercase tracking-wide mb-3">Seksi Bidang</h3>
                             <div class="space-y-4">
                                 <template x-for="bidangObj in data.kepengurusan?.['Seksi Bidang']">
-                                    <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
-                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'• ' + bidangObj.bidang"></h4>
+                                    <div class="border-b border-slate-200 dark:border-zinc-800 pb-3 last:border-0 last:pb-0">
+                                        <h4 class="font-semibold text-smadaText dark:text-darkText text-xs sm:text-sm mb-2" x-text="'• ' + bidangObj.bidang"></h4>
                                         <ul class="space-y-1 pl-3">
                                             <template x-for="(m, index) in bidangObj.anggota">
-                                                <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
+                                                <li class="text-xs sm:text-sm text-smadaMuted dark:text-darkMuted flex items-center justify-between py-0.5">
                                                     <span x-text="(index + 1) + '. ' + m.role"></span>
                                                     <span x-text="m.name" class="font-mono text-xs"></span>
                                                 </li>
@@ -108,23 +124,23 @@
             </div>
 
             <!-- Laci 2: Program Kerja -->
-            <div class="bg-smadaCard border border-smadaBorder rounded-2xl overflow-hidden shadow-sm transition-all">
+            <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl overflow-hidden shadow-sm transition-all">
                 <button @click="openSection = (openSection === 'progja' ? null : 'progja')" 
-                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText hover:bg-sky-50/50 transition">
+                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText dark:text-darkText hover:bg-sky-50/50 dark:hover:bg-zinc-800/50 transition">
                     <span class="flex items-center text-sm sm:text-base">
-                        <span class="w-2 h-5 bg-smadaBlue rounded-full mr-3"></span>
+                        <span class="w-2 h-5 bg-smadaBlue dark:bg-smadaRed rounded-full mr-3"></span>
                         PROGRAM KERJA UTAMA
                     </span>
-                    <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'progja' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-5 h-5 text-smadaMuted dark:text-darkMuted transition-transform duration-300" :class="openSection === 'progja' ? 'rotate-180 text-smadaBlue dark:text-smadaRed' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'progja'" 
                      x-collapse 
-                     class="border-t border-smadaBorder">
+                     class="border-t border-smadaBorder dark:border-darkBorder">
                     <div class="px-6 py-6 space-y-4">
                         <template x-for="(prog, index) in data.progjaDetails">
-                            <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
-                                <h3 class="text-sm sm:text-base font-bold text-smadaText mb-1" x-text="(index + 1) + '. ' + prog.title"></h3>
-                                <p class="text-xs sm:text-sm text-smadaMuted leading-relaxed" x-text="prog.desc"></p>
+                            <div class="bg-slate-50 dark:bg-zinc-900/60 border border-smadaBorder dark:border-darkBorder rounded-xl p-4">
+                                <h3 class="text-sm sm:text-base font-bold text-smadaText dark:text-darkText mb-1" x-text="(index + 1) + '. ' + prog.title"></h3>
+                                <p class="text-xs sm:text-sm text-smadaMuted dark:text-darkMuted leading-relaxed" x-text="prog.desc"></p>
                             </div>
                         </template>
                     </div>
@@ -132,22 +148,22 @@
             </div>
 
             <!-- Laci 3: Dokumentasi Kegiatan -->
-            <div class="bg-smadaCard border border-smadaBorder rounded-2xl overflow-hidden shadow-sm transition-all" x-show="data.dokumentasi">
+            <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl overflow-hidden shadow-sm transition-all" x-show="data.dokumentasi">
                 <button @click="openSection = (openSection === 'dokumentasi' ? null : 'dokumentasi')" 
-                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText hover:bg-sky-50/50 transition">
+                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText dark:text-darkText hover:bg-sky-50/50 dark:hover:bg-zinc-800/50 transition">
                     <span class="flex items-center text-sm sm:text-base">
-                        <span class="w-2 h-5 bg-smadaBlue rounded-full mr-3"></span>
+                        <span class="w-2 h-5 bg-smadaBlue dark:bg-smadaRed rounded-full mr-3"></span>
                         DOKUMENTASI KEGIATAN
                     </span>
-                    <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'dokumentasi' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-5 h-5 text-smadaMuted dark:text-darkMuted transition-transform duration-300" :class="openSection === 'dokumentasi' ? 'rotate-180 text-smadaBlue dark:text-smadaRed' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'dokumentasi'" 
                      x-collapse 
-                     class="border-t border-smadaBorder">
+                     class="border-t border-smadaBorder dark:border-darkBorder">
                     <div class="px-6 py-6">
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             <template x-for="img in data.dokumentasi">
-                                <div class="rounded-xl overflow-hidden border border-smadaBorder bg-slate-100 aspect-video shadow-sm">
+                                <div class="rounded-xl overflow-hidden border border-smadaBorder dark:border-darkBorder bg-slate-100 dark:bg-zinc-900 aspect-video shadow-sm">
                                     <img :src="img" alt="Dokumentasi Kegiatan" class="w-full h-full object-cover hover:scale-105 transition duration-300">
                                 </div>
                             </template>
@@ -157,23 +173,23 @@
             </div>
 
             <!-- Laci 4: Lain-lain -->
-            <div class="bg-smadaCard border border-smadaBorder rounded-2xl overflow-hidden shadow-sm transition-all" x-show="data.lainLain">
+            <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl overflow-hidden shadow-sm transition-all" x-show="data.lainLain">
                 <button @click="openSection = (openSection === 'lain' ? null : 'lain')" 
-                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText hover:bg-sky-50/50 transition">
+                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText dark:text-darkText hover:bg-sky-50/50 dark:hover:bg-zinc-800/50 transition">
                     <span class="flex items-center text-sm sm:text-base">
-                        <span class="w-2 h-5 bg-smadaBlue rounded-full mr-3"></span>
+                        <span class="w-2 h-5 bg-smadaBlue dark:bg-smadaRed rounded-full mr-3"></span>
                         LAIN-LAIN
                     </span>
-                    <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'lain' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-5 h-5 text-smadaMuted dark:text-darkMuted transition-transform duration-300" :class="openSection === 'lain' ? 'rotate-180 text-smadaBlue dark:text-smadaRed' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'lain'" 
                      x-collapse 
-                     class="border-t border-smadaBorder">
+                     class="border-t border-smadaBorder dark:border-darkBorder">
                     <div class="px-6 py-6">
                         <ul class="space-y-2">
                             <template x-for="note in data.lainLain">
-                                <li class="flex items-start text-xs sm:text-sm text-smadaMuted bg-slate-50 border border-smadaBorder rounded-xl p-3">
-                                    <span class="text-smadaBlue mr-2 font-bold">•</span>
+                                <li class="flex items-start text-xs sm:text-sm text-smadaMuted dark:text-darkMuted bg-slate-50 dark:bg-zinc-900/60 border border-smadaBorder dark:border-darkBorder rounded-xl p-3">
+                                    <span class="text-smadaBlue dark:text-smadaRed mr-2 font-bold">•</span>
                                     <span x-text="note"></span>
                                 </li>
                             </template>
@@ -183,22 +199,22 @@
             </div>
 
             <!-- Laci 5: Sosial Media -->
-            <div class="bg-smadaCard border border-smadaBorder rounded-2xl overflow-hidden shadow-sm transition-all">
+            <div class="bg-smadaCard dark:bg-darkCard border border-smadaBorder dark:border-darkBorder rounded-2xl overflow-hidden shadow-sm transition-all">
                 <button @click="openSection = (openSection === 'sosmed' ? null : 'sosmed')" 
-                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText hover:bg-sky-50/50 transition">
+                        class="w-full px-6 py-4 flex items-center justify-between text-left font-bold text-smadaText dark:text-darkText hover:bg-sky-50/50 dark:hover:bg-zinc-800/50 transition">
                     <span class="flex items-center text-sm sm:text-base">
-                        <span class="w-2 h-5 bg-smadaBlue rounded-full mr-3"></span>
+                        <span class="w-2 h-5 bg-smadaBlue dark:bg-smadaRed rounded-full mr-3"></span>
                         SOSIAL MEDIA
                     </span>
-                    <svg class="w-5 h-5 text-smadaMuted transition-transform duration-300" :class="openSection === 'sosmed' ? 'rotate-180 text-smadaBlue' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-5 h-5 text-smadaMuted dark:text-darkMuted transition-transform duration-300" :class="openSection === 'sosmed' ? 'rotate-180 text-smadaBlue dark:text-smadaRed' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="openSection === 'sosmed'" 
                      x-collapse 
-                     class="border-t border-smadaBorder">
+                     class="border-t border-smadaBorder dark:border-darkBorder">
                     <div class="px-6 py-6">
                         <div class="flex gap-3">
-                            <a :href="data.sosmed?.ig || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">Instagram</a>
-                            <a :href="data.sosmed?.tt || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 text-smadaBlue text-xs sm:text-sm font-semibold border border-sky-100 hover:bg-smadaBlue hover:text-white transition text-center">TikTok</a>
+                            <a :href="data.sosmed?.ig || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 dark:bg-zinc-800 text-smadaBlue dark:text-smadaRed text-xs sm:text-sm font-semibold border border-sky-100 dark:border-zinc-700 hover:bg-smadaBlue dark:hover:bg-smadaRed hover:text-white dark:hover:text-white transition text-center">Instagram</a>
+                            <a :href="data.sosmed?.tt || '#'" target="_blank" class="flex-1 py-2.5 rounded-xl bg-sky-50 dark:bg-zinc-800 text-smadaBlue dark:text-smadaRed text-xs sm:text-sm font-semibold border border-sky-100 dark:border-zinc-700 hover:bg-smadaBlue dark:hover:bg-smadaRed hover:text-white dark:hover:text-white transition text-center">TikTok</a>
                         </div>
                     </div>
                 </div>
@@ -209,7 +225,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-smadaBorder py-12 text-center text-sm text-smadaMuted bg-white mt-20">
+    <footer class="border-t border-smadaBorder dark:border-darkBorder py-12 text-center text-sm text-smadaMuted dark:text-darkMuted bg-white dark:bg-darkCard mt-20 transition-colors duration-300">
         <p>© 2026 SMAN 2 Purwokerto. Portal Resmi Organisasi & Ekstrakurikuler.</p>
     </footer>
 
@@ -315,10 +331,10 @@ Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan E
                             progjaDetails: [
                                 { title: 'Smada Expo', desc: 'Acara besar tahunan untuk memperingati hari ulang tahun SMAN 2 Purwokerto yang diisi dengan perlombaan internal maupun eksternal seperti pentas seni dan pameran.' },
                                 { title: 'Bakti Sosial', desc: 'Program kerja ini merupakan program yang berkaitan dengan kemanusiaan dan kepedulian. Kegiatan ini dilaksanakan di desa tertentu dengan sasaran kegiatannya adalah warga desa tersebut. Adapun bentuk dari kegiatan ini adalah penyuluhan kesehatan, pembagian paket sembako, pemeriksaan kesehatan, penanaman pohon, serta mengajar di SD setempat. OSIS bersama organisasi MPK, Rohis, Rohkat & Rohkris, Adiwiyata, COSCODA, PRAMUKA, PASPARA, PMR, dan PIK-R berperan dalam kegiatan ini. Harapannya, aksi sosial ini dapat menciptakan rasa kepedulian terhadap sesama serta dapat mempererat tali persaudaraan.' },
-                                { title: 'Classmeeting', desc: 'Program kerja ini dilaksanakan 5x secara rutin setiap tahunnya. Macam-macam classmeet tersebut yaitu : classmeet akhir semester, classmeet akhir tahun, classmeet dalam rangka Ulang Tahun Sekolah, classmeet dalam rangka perayaan Hari Kemerdekaan Indonesia, dan classmeeting dalam rangka Bulan Bahasa. Classmeeting SMADA memiliki beragam lomba yang bervariasi, adapun lomba-lomba yang menonjolkan kerja sama antar tim seperti Smada Warrior, Perkusi, Kreasi Tutup Botol, Voli, Basket, Mini Soccer dan Kebersihan Kelas. Selain itu, terdapat juga lomba yang dapat meningkatkan kemampuan diri seperti Desain Merchandise, Debat, dll. Perlombaan E-Sport seperti Battle Free Fire dan Mobile Legend juga turut serta mewarnai kegiatan Classmeeting.' },
+                                { title: 'Classmeeting', desc: 'Program kerja ini dilaksanakan 5x secara rutin setiap tahunnya. Macam-macam classmeet tersebut yaitu : classmeet akhir semester, classmeet akhir tahun, classmeet dalam rangka Ulang Tahun Sekolah, classmeet dalam rangka perayaan Hari Kemerdekaan Indonesia, dan classmeet dalam rangka Bulan Bahasa. Classmeeting SMADA memiliki beragam lomba yang bervariasi, adapun lomba-lomba yang menonjolkan kerja sama antar tim seperti Smada Warrior, Perkusi, Kreasi Tutup Botol, Voli, Basket, Mini Soccer dan Kebersihan Kelas. Selain itu, terdapat juga lomba yang dapat meningkatkan kemampuan diri seperti Desain Merchandise, Debat, dll. Perlombaan E-Sport seperti Battle Free Fire dan Mobile Legend juga turut serta mewarnai kegiatan Classmeeting.' },
                                 { title: 'Peringatan HUT RI', desc: 'Kegiatan ini dilaksanakan sebagai bentuk perayaan hari ulang tahun Republik Indonesia yang diisi dengan berbagai kegiatan seperti upacara bendera, formasi selebrasi, perlombaan, serta tasyakuran. OSIS berperan dalam kegiatan perlombaan yang dapat mengisi momen kemerdekaan dengan berbagai kegiatan yang positif. Harapannya dengan adanya kegiatan ini dapat memupuk semangat kebangsaan siswa – siswi SMADA agar dapat memperkuat ketahanan nasional.' },
                                 { title: 'Pengenalan Lingkungan Sekolah', desc: 'Setelah terbitnya pengumuman SPMB, inilah saatnya OSIS mengenalkan lingkungan sekolah kepada peserta didik baru. PLS atau Pengenalan Lingkungan Sekolah adalah program kerja Osis yang memiliki tujuan membantu proses adaptasi adik-adik yang baru masuk di SMAN 2 Purwokerto untuk terbiasa dengan lingkungan sekitarnya. Bentuk dari acara PLS ini beragam lho, yakni adanya sosialisasi dari kepala sekolah, sosialisasi dari pihak luar/eksternal, demo organisasi dan ekskul, serta pemberian tugas kepada peserta didik baru. Setelah diadakannya PLS, biasanya kegiatan dilanjutkan dengan Kemah Penerimaan Dewan Calon Ambalan, yaitu salah 1 program kerja Garuda Shima.' },
-                                { title: 'Ajangsana/i', desc: 'Anjangsana/i adalah kegiatan berkunjung/dikunjungi OSIS sekolah lain untuk saling bertukar ilmu dan pengalaman. Dalam anjangsana/i, bentuk kegiatannya sangat menarik lho, ada pemaparan materi mengenai organisasi masing-masing sekolah, games dan ice breaking, tea and coffee time, sharing-sharing jabatan, dan school tour. Kegiatan ini sangat asik karena bisa menambah networking dan juga ajang menggali informasi dan menumbuhkan jiwa inovatif dalam diri setiap anggota.' },
+                                { title: 'Anjangsana/i', desc: 'Anjangsana/i adalah kegiatan berkunjung/dikunjungi OSIS sekolah lain untuk saling bertukar ilmu dan pengalaman. Dalam anjangsana/i, bentuk kegiatannya sangat menarik lho, ada pemaparan materi mengenai organisasi masing-masing sekolah, games dan ice breaking, tea and coffee time, sharing-sharing jabatan, dan school tour. Kegiatan ini sangat asik karena bisa menambah networking dan juga ajang menggali informasi dan menumbuhkan jiwa inovatif dalam diri setiap anggota.' },
                                 { title: 'Gelar Kreasi Siswa (GKS)', desc: 'Gelar Kreasi Siswa adalah ajang perlombaan dimana seluruh siswa SMAN 2 Purwokerto dapat menampilkan bakat dan minatnya. Kegiatan ini biasanya dibarengi/collab dengan program kurikulum, yakni P5.' }
                             ],
                             dokumentasi: [
@@ -387,9 +403,9 @@ Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan E
                                 { title: 'PILKAOS (Pemilihan Ketua OSIS)', desc: 'PILKAOS adalah program kerja yang ada di MPK dalam rangka memilih ketua OSIS dengan menggunakan suara terbanyak. Di PILKAOS ini MPK akan menjadi penyelenggara dari pemilihan mulai dari masa kampanye, orasi calon ketua OSIS, debat calon ketua OSIS, dan juga hari pemilihan itu sendiri'} ,
                                 { title: 'FORKSA (Forum Komunikasi Sekolah)', desc: 'FORKSA adalah program kerja MPK yang menjalankan Fungsi Aspirasi. MPK akan menampung aspirasi dari warga sekolah, kemudian mengelola dan menyampaikan aspirasi tersebut ke pihak sekolah pada puncak acara FORKSA.'} ,
                                 { title: 'MISERA (Mid Semester Aspirations)', desc: 'MISERA adalah program kerja MPK yang menjalankan Fungsi Aspirasi. MPK akan menampung aspirasi dari warga sekolah, kemudian mengelola dan menyampaikan aspirasi tersebut ke pihak sekolah. Program kerja ini juga berfungsi untuk mendukung berlangsungnya FORKSA sebagai puncak dari pelaksanaan fungsi aspirasi.'} ,
-                                { title: 'AJANGSANA (Internal & Eksternal)', desc: 'Anjangsana internal adalah suatu kegiatan berkumpul dan berbagi informasi dengan organisasi atau ekstrakurikuler yang ada di SMA Negeri 2 Purwokerto. Sedangkan anjangsana eksternal adalah  suatu kegiatan mengunjungi MPK sekolah lain, untuk saling bertukar informasi seputar MPK di sekolah masing-masing.'} ,
+                                { title: 'ANJANGSANA (Internal & Eksternal)', desc: 'Anjangsana internal adalah suatu kegiatan berkumpul dan berbagi informasi dengan organisasi atau ekstrakurikuler yang ada di SMA Negeri 2 Purwokerto. Sedangkan anjangsana eksternal adalah  suatu kegiatan mengunjungi MPK sekolah lain, untuk saling bertukar informasi seputar MPK di sekolah masing-masing.'} ,
                                 { title: 'HAKRAB (Hari Keakraban)', desc: 'HAKRAB adalah program kerja MPK yang berfungsi untuk meningkatkan keakraban antar pengurus MPK. Dalam kegiatan HAKRAB ini, pengurus MPK akan mengakrabkan diri melalui permainan beregu dan juga pembekalan materi penunjang untuk bertugas sebagai seorang pengurus MPK.'} ,
-                                { title: 'GBHK (Gatis Besar Haluan Kerja)', desc: 'GBHK adalah program kerja MPK yang berisi tentang edukasi mengenai kedisiplinan pengumpulan proposal dan juga laporan pertanggungjawaban. Program kerja ini juga berisi pelatihan kesekretariatan dan kebendaharaan kepada seluruh organisasi dan ekstrakulikuler yang ada di SMA Negeri 2 Purwokerto.'} 
+                                { title: 'GBHK (Garis Besar Haluan Kerja)', desc: 'GBHK adalah program kerja MPK yang berisi tentang edukasi mengenai kedisiplinan pengumpulan proposal dan juga laporan pertanggungjawaban. Program kerja ini juga berisi pelatihan kesekretariatan dan kebendaharaan kepada seluruh organisasi dan ekstrakulikuler yang ada di SMA Negeri 2 Purwokerto.'} 
                             ],
                             dokumentasi: [
                                 '2 (2).png'
