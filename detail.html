@@ -69,39 +69,40 @@
                      x-collapse.duration.600ms
                      class="px-6 pb-6 pt-2 border-t border-smadaBorder">
                     <div class="space-y-6 mt-3">
-                        <template x-for="(group, title) in data.kepengurusan">
-                            <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
-                                <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3" x-text="title"></h3>
-                                
-                                <!-- Jika BPH (berbentuk array biasa) -->
-                                <ul class="space-y-1.5" x-show="Array.isArray(group)">
-                                    <template x-for="item in group">
-                                        <li class="text-xs sm:text-sm text-smadaText flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
-                                            <span x-text="item.role" class="font-medium"></span>
-                                            <span x-text="item.name" class="text-smadaMuted font-mono text-xs"></span>
-                                        </li>
-                                    </template>
-                                </ul>
+                        
+                        <!-- 1. Kotak BPH -->
+                        <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
+                            <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3">BPH (Badan Pengurus Harian)</h3>
+                            <ul class="space-y-1.5">
+                                <template x-for="item in data.kepengurusan?.['BPH (Badan Pengurus Harian)']">
+                                    <li class="text-xs sm:text-sm text-smadaText flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
+                                        <span x-text="item.role" class="font-medium"></span>
+                                        <span x-text="item.name" class="text-smadaMuted font-mono text-xs"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
 
-                                <!-- Jika Seksi Bidang (berbentuk array bertingkat dengan sub-anggota) -->
-                                <div class="space-y-4" x-show="!Array.isArray(group)">
-                                    <template x-for="bidangObj in group">
-                                        <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
-                                            <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'> ' + bidangObj.bidang"></h4>
-                                            <ul class="space-y-1 pl-3">
-                                                <template x-for="(m, index) in bidangObj.anggota">
-                                                    <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
-                                                        <span x-text="(index + 1) + '. ' + m.role"></span>
-                                                        <span x-text="m.name" class="font-mono text-xs"></span>
-                                                    </li>
-                                                </template>
-                                            </ul>
-                                        </div>
-                                    </template>
-                                </div>
-
+                        <!-- 2. Kotak Seksi Bidang -->
+                        <div class="bg-slate-50 border border-smadaBorder rounded-xl p-4">
+                            <h3 class="font-bold text-smadaBlue text-xs uppercase tracking-wide mb-3">Seksi Bidang</h3>
+                            <div class="space-y-4">
+                                <template x-for="bidangObj in data.kepengurusan?.['Seksi Bidang']">
+                                    <div class="border-b border-slate-200 pb-3 last:border-0 last:pb-0">
+                                        <h4 class="font-semibold text-smadaText text-xs sm:text-sm mb-2" x-text="'> ' + bidangObj.bidang"></h4>
+                                        <ul class="space-y-1 pl-3">
+                                            <template x-for="(m, index) in bidangObj.anggota">
+                                                <li class="text-xs sm:text-sm text-smadaMuted flex items-center justify-between py-0.5">
+                                                    <span x-text="(index + 1) + '. ' + m.role"></span>
+                                                    <span x-text="m.name" class="font-mono text-xs"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </template>
                             </div>
-                        </template>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -272,36 +273,6 @@ Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan E
                                             { role: 'OPPK COSCODA', name: '(025)' },
                                             { role: 'OPPK PASPARA', name: '(026)' }
                                         ] 
-                                    },
-                                    { 
-                                        bidang: 'KK (Keterampilan Kewirausahaan)', 
-                                        anggota: [
-                                            { role: 'KK 1', name: '(027)' },
-                                            { role: 'KK 2', name: '(028)' },
-                                            { role: 'KK 3', name: '(029)' }
-                                        ] 
-                                    },
-                                    { 
-                                        bidang: 'PAKS (Persepsi Apresiasi & Kreasi Seni)', 
-                                        anggota: [
-                                            { role: 'PAKS UMUM 1', name: '(030)' },
-                                            { role: 'PAKS UMUM 2', name: '(031)' },
-                                            { role: 'PAKS MUSIK', name: '(032)' },
-                                            { role: 'OPPK EXCELSIORS', name: '(033)' },
-                                            { role: 'PAKS REDAKSI', name: '(034)' },
-                                            { role: 'PAKS DRAMA', name: '(035)' },
-                                            { role: 'OPPK FOS', name: '(036)' }
-                                        ] 
-                                    },
-                                    { 
-                                        bidang: 'KJDK (Kesehatan Jasmani & Daya Kreasi)', 
-                                        anggota: [
-                                            { role: 'KJDK PMR', name: '(037)' },
-                                            { role: 'KJDK MP', name: '(038)' },
-                                            { role: 'KJDK BASKET', name: '(039)' },
-                                            { role: 'KJDK BOLA', name: '(040)' },
-                                            { role: 'KJDK PIK-R', name: '(041)' }
-                                        ] 
                                     }
                                 ]
                             },
@@ -322,7 +293,7 @@ Fun fact nih gengs, di dalam OSIS juga terdapat perwakilan dari Organisasi dan E
                                 'Memiliki sistem NPO (Nomor Pengurus OSIS) resmi untuk penataan administrasi.'
                             ],
                             sosmed: {
-                                ig: 'https://instagram.com/osissmada',
+                                ig: 'https://www.instagram.com/osissmada.pwt?obrf=MTRtdGc0NWI5NHU0bA==',
                                 tt: 'https://tiktok.com/@osissmada'
                             }
                         },
